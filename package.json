@@ -1,3 +1,33 @@
 {
-  "name": "agents-fetch"
+  "types": "./index.d.ts",
+  "name": "agents-fetch",
+  "version": "4.2.0",
+  "description": "Simple Web Request Package",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgentHackerYT/agents-fetch.git"
+  },
+  "keywords": [
+    "fetch",
+    "node-fetch",
+    "axios",
+    "got",
+    "request",
+    "http",
+    "better-http",
+    "easy-fetch",
+    "https",
+    "better-https",
+    "http"
+  ],
+  "author": "jenil-dev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AgentHackerYT/agents-fetch/issues"
+  },
+  "homepage": "https://github.com/AgentHackerYT/agents-fetch#readme"
 }
