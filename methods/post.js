@@ -8,19 +8,20 @@ async function post(url="", type, options = {},response){
 
     if(options == undefined || options == null){
     
-    opt  = Object.assign(options, {host: Url.host, path: Url.pathname, method: "POST"})
+    opt  = Object.assign(options, {host: Url.host, path: Url.pathname, method: "POST", headers: {'User-Agent': `Agents-Fetch / v${require("../package.json").version}`}})
 
     }
     
-    if(options != undefined || options == null && options.host == undefined || options.path == undefined){
+    if(options != undefined || options != null && options.host == undefined || options.path == undefined){
 
-        opt  = Object.assign(options, {host: Url.host, path: Url.pathname, method: "POST"})
+        opt  = Object.assign(options, {host: Url.host, path: Url.pathname, method: "POST", headers: {'User-Agent': `Agents-Fetch / v${require("../package.json").version}`}})
 
     }
 
     const fetch = https.get(opt)
 
 fetch.on("response", (res) =>{
+    if(!response) return;
     if(type == "response"){
 
         response(res)
@@ -30,7 +31,6 @@ fetch.on("response", (res) =>{
     }
         res.on('data', (data) =>{
 
-            if(!response) throw new Error("Response Parmeter is Callback")
             if(type.toLowerCase() == "json"){
 
            response(JSON.parse(Buffer.from(data).toString("utf-8")))
@@ -56,7 +56,6 @@ fetch.on("response", (res) =>{
         })
 
     })
-
 }
 
 module.exports = post
