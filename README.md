@@ -1,3 +1,7 @@
 # agents-fetch
 
-<h3 style="color: red;">Underdevelopment</h3>
+- Under Beta Stage
+
+# Beta Test Install
+
+`npm i git+https://github.com/AgentHackerYT/agents-fetch`
