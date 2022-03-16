@@ -2,6 +2,9 @@
 - Simple Http request package
 - Considerably a Alternative for node-fetch / axios / got
 - Uses no 3rd party dependencies
+#Installation
+- Using Github Source code: `npm i git+https://github.com/AgentHackerYT/agents-fetch`
+- Using NPM: `npm i agents-api`
 # Usage
 
 - GET
