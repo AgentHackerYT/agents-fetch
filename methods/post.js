@@ -1,6 +1,6 @@
-const https = require('https')
+let https = require('https')
 
-async function post(url="", type, options = {},response){
+async function post(url="", type, options = {}){
 
     const Url = new URL(url)
 
@@ -8,23 +8,27 @@ async function post(url="", type, options = {},response){
 
     if(options == undefined || options == null){
     
-    opt  = Object.assign(options, {host: Url.host, path: Url.pathname, method: "POST", headers: {'User-Agent': `Agents-Fetch / v${require("../package.json").version}`}})
+    opt  = Object.assign(options, {host: Url.host, path: url.replace(url + url.split('/')[2], ""), method: "POST", headers: {'User-Agent': `Agents-Fetch / v${require("../package.json").version}`}})
 
     }
     
-    if(options != undefined || options != null && options.host == undefined || options.path == undefined){
+    if(options != undefined || options == null && options.host == undefined || options.path == undefined){
 
-        opt  = Object.assign(options, {host: Url.host, path: Url.pathname, method: "POST", headers: {'User-Agent': `Agents-Fetch / v${require("../package.json").version}`}})
+        opt  = Object.assign(options, {host: Url.host, path: url.replace(url + url.split('/')[2], ""), method: "POST", headers: {'User-Agent': `Agents-Fetch / v${require("../package.json").version}`}})
 
     }
 
+    if(Url.protocol == "http:") https = require("http")
+
     const fetch = https.get(opt)
 
+
+return new Promise(function(resolve, reject){
 fetch.on("response", (res) =>{
-    if(!response) return;
+
     if(type == "response"){
 
-        response(res)
+        resolve(res)
 
         return;
 
@@ -33,29 +37,31 @@ fetch.on("response", (res) =>{
 
             if(type.toLowerCase() == "json"){
 
-           response(JSON.parse(Buffer.from(data).toString("utf-8")))
+         resolve(JSON.parse(Buffer.from(data).toString("utf-8")))
 
             }else if(type.toLowerCase() == "buffer"){
 
-            response(data)
+                resolve(data)
 
             }else if(type.toLowerCase() == "text"){
 
-            response(Buffer.from(data).toString("utf-8"))
+                resolve(Buffer.from(data).toString("utf-8"))
 
             }else if(type.toLowerCase() == "status"){
 
-                response({statusCode: res.statusCode, statusMessage: res.statusMessage})
+                resolve({statusCode: res.statusCode, statusMessage: res.statusMessage})
 
             }else{
 
-                response("No Type Chose or The Chosen Type is not a type")
+                reject("No Type Chose or The Chosen Type is not a type")
 
             }
 
         })
 
     })
+})
 }
 
 module.exports = post
+
